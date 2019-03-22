@@ -1,0 +1,41 @@
+# flask_graphene_mongo/models.py
+from datetime import datetime
+from mongoengine import Document
+from mongoengine.fields import (
+    DateTimeField, ReferenceField, StringField, ListField
+)
+
+
+class Department(Document):
+    meta = {'collection': 'department'}
+    name = StringField()
+
+
+class Role(Document):
+    meta = {'collection': 'role'}
+    name = StringField()
+
+
+class Employee(Document):
+    meta = {'collection': 'employee'}
+    name = StringField()
+    hired_on = DateTimeField(default=datetime.now)
+    department = ReferenceField(Department)
+    role = ReferenceField(Role)
+
+
+class Flight(Document):
+    meta = {'collection': 'flight'}
+    airline = StringField()
+    duration = StringField()
+    price = StringField()
+    airports = StringField()
+    stops = StringField()
+    layover = StringField()
+    flight_time = StringField()
+
+
+class FlightList(Document):
+    meta = {'collection': 'flightList'}
+    destination = StringField()
+    flights = ListField(ReferenceField(Flight))
